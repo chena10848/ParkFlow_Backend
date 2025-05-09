@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Clean Workspace') {
+        stage('Checkout') {
             steps {
-                deleteDir()  // ⬅ 清空 Jenkins 工作目錄
+                checkout scm
             }
         }
 
@@ -17,20 +17,14 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t $IMAGE_NAME .'
+                sh 'docker build -t parkflow-backend .'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'docker rm -f $CONTAINER_NAME || true'
-                sh 'docker run -d -p 8081:8080 --name $CONTAINER_NAME $IMAGE_NAME'
+                echo 'Deploy logic goes here...'
             }
         }
-    }
-
-    environment {
-        IMAGE_NAME = "parkflow-backend"
-        CONTAINER_NAME = "parkflow-backend"
     }
 }

@@ -18,14 +18,14 @@ pipeline {
                 echo '⚙️ 開始建置並執行單元測試...'
                 sh 'chmod +x gradlew'
                 sh './gradlew clean test build --info'
+                sh 'ls -al build/test-results/test' // 查看報告是否產生
             }
         }
 
         stage('Test Report') {
             steps {
                 echo '🧪 匯入測試報告...'
-                // Jenkins 預設會讀取這個路徑下的 JUnit XML
-                junit allowEmptyResults: true, testResults: 'build/test-results/test/*.xml'
+                junit allowEmptyResults: true, testResults: '**/build/test-results/test/*.xml'
             }
         }
 

@@ -56,3 +56,17 @@ tasks.named('bootJar') {
 	archiveFileName = 'app.jar'
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
+
+test {
+    useJUnitPlatform()
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+
+    reports {
+        junitXml.required = true  // 產出 XML 給 Jenkins
+        html.required = false     // 可關閉 HTML
+    }
+}

@@ -1,12 +1,13 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "parkflow-backend"
-        CONTAINER_NAME = "parkflow-backend"
-    }
-
     stages {
+        stage('Clean Workspace') {
+            steps {
+                deleteDir()  // ⬅ 清空 Jenkins 工作目錄
+            }
+        }
+
         stage('Build') {
             steps {
                 sh './gradlew build -x test'
@@ -25,5 +26,10 @@ pipeline {
                 sh 'docker run -d -p 8081:8080 --name $CONTAINER_NAME $IMAGE_NAME'
             }
         }
+    }
+
+    environment {
+        IMAGE_NAME = "parkflow-backend"
+        CONTAINER_NAME = "parkflow-backend"
     }
 }

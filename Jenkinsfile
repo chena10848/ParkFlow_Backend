@@ -17,7 +17,7 @@ pipeline {
             steps {
                 echo '⚙️ 開始建置 Gradle 專案...'
                 sh 'chmod +x gradlew'
-                sh './gradlew build -x test'
+                sh './gradlew build'
             }
         }
 

@@ -13,11 +13,18 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build & Test') {
             steps {
-                echo '⚙️ 開始建置 Gradle 專案...'
+                echo '⚙️ 開始建置並執行單元測試...'
                 sh 'chmod +x gradlew'
-                sh './gradlew build'
+                sh './gradlew clean test build'
+            }
+        }
+
+        stage('Test Report') {
+            steps {
+                echo '🧪 匯入測試報告...'
+                junit 'build/test-results/test/*.xml'
             }
         }
 
@@ -30,7 +37,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo '🚀 正在啟動容器...'
+                echo '正在啟動容器...'
                 sh '''
                     docker stop $IMAGE_NAME || true
                     docker rm $IMAGE_NAME || true
@@ -42,10 +49,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ Pipeline 執行成功！'
+            echo 'Pipeline 執行成功！'
         }
         failure {
-            echo '❌ Pipeline 執行失敗，請檢查錯誤訊息'
+            echo ' Pipeline 執行失敗，請檢查錯誤訊息'
         }
     }
 }

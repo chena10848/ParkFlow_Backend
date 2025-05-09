@@ -30,8 +30,12 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo '🚀 模擬部署階段（可改為實際上傳、推送或部署）'
-                // 例如：sh 'docker run -d -p 8080:8080 $IMAGE_NAME:$DOCKER_TAG'
+                echo '🚀 正在啟動容器...'
+                sh '''
+                    docker stop $IMAGE_NAME || true
+                    docker rm $IMAGE_NAME || true
+                    docker run -d --name $IMAGE_NAME -p 8082:8080 $IMAGE_NAME:$DOCKER_TAG
+                '''
             }
         }
     }

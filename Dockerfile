@@ -1,8 +1,14 @@
-# 使用官方 OpenJDK 基礎映像
-FROM openjdk:17
+# 使用官方 OpenJDK 17 基礎映像檔（可依你 build.gradle 中的版本調整）
+FROM eclipse-temurin:17-jdk-alpine
 
-# 複製 jar 檔進容器，名稱統一為 app.jar
-COPY build/libs/*SNAPSHOT.jar app.jar
+# 建立 app 目錄
+WORKDIR /app
 
-# 執行 Spring Boot 應用
+# 複製 jar 檔到容器
+COPY build/libs/*.jar app.jar
+
+# 曝露 port（如果你在 application.properties 有設定 server.port 也要對應）
+EXPOSE 8080
+
+# 執行 jar 檔
 ENTRYPOINT ["java", "-jar", "app.jar"]

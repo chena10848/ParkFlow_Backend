@@ -18,17 +18,6 @@ pipeline {
                 echo '⚙️ 開始建置並執行單元測試...'
                 sh 'chmod +x gradlew'
                 sh './gradlew clean test build'
-                // 額外偵錯：確認是否有測試報告產出
-                sh 'find . -name "*.xml"'
-                sh 'ls -al build/test-results/test || echo "測試報告目錄不存在"'
-            }
-        }
-
-        stage('Test Report') {
-            steps {
-                echo '🧪 匯入測試報告...'
-                // Jenkins 尋找測試報告用的標準設定
-                junit allowEmptyResults: true, testResults: 'build/test-results/test/*.xml'
             }
         }
 

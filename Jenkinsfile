@@ -15,7 +15,7 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                echo '⚙️ 開始建置並執行單元測試...'
+                echo '開始建置並執行單元測試...'
                 sh 'chmod +x gradlew'
                 sh './gradlew clean test build'
             }
@@ -23,14 +23,14 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                echo '🐳 建立 Docker 映像檔...'
+                echo '建立 Docker 映像檔...'
                 sh 'docker build -t $IMAGE_NAME:$DOCKER_TAG .'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo '🚀 正在啟動容器...'
+                echo '正在啟動容器...'
                 sh '''
                     docker stop $IMAGE_NAME || true
                     docker rm $IMAGE_NAME || true

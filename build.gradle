@@ -50,6 +50,8 @@ dependencies {
 
 	//email
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	implementation 'com.mysql:mysql-connector-j:8.0.33'
 }
 
 tasks.named('bootJar') {

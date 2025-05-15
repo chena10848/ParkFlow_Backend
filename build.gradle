@@ -43,7 +43,7 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 	//oracle
-//	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
 
 	//Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
